@@ -27,6 +27,7 @@ Build a new monitoring solution! Feature set like Icinga, but with improvements!
 * Service dependencies? (www:de depends on www, dont page for www:de if www is down)
 * Leverages existing library of nagios checks
 * Some kind of query language (like solr+collins?)
+* Profiling capability and internal metrics (check duration, latency, etc)
 
 ## Design features
 
