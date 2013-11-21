@@ -1,1 +1,14 @@
 GET   /   controllers.Application.index
+
+# hosts
+GET     /hosts                  controllers.Application.hosts
+POST    /hosts                  controllers.Application.newHost
+POST    /hosts/:id/delete       controllers.Application.deleteHost(id: Long)
+
+
+# API for hosts
+#GET     /api/hosts      controllers.Api.getHosts
+#GET     /api/host/:id   controllers.Api.getHost(id: Int)
+#POST    /api/host/:id   controllers.Api.updateHost(id: Int)
+#PUT     /api/host/:id   controllers.Api.createHost(id: Int)
+#DELETE  /api/host/:id   controllers.Api.deleteHost(id: Int)

@@ -1,3 +1,32 @@
-@(message: String)
+@(hosts: List[Host], hostForm: Form[String])
 
-<b> @message </b>
+@import helper._
+
+@main("Host list") {
+
+    <h1>@hosts.size hosts(s)</h1>
+
+    <ul>
+        @hosts.map { host =>
+            <li>
+                @host.hostname
+
+                @form(routes.Application.deleteHost(host.id)) {
+                    <input type="submit" value="Delete">
+                }
+            </li>
+        }
+    </ul>
+
+    <h2>Add a new host</h2>
+
+    @form(routes.Application.newHost) {
+
+        @inputText(hostForm("label"))
+
+        <input type="submit" value="Create">
+
+    }
+
+}
+
