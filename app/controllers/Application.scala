@@ -15,15 +15,15 @@ object Application extends Controller {
   )
 
   def index = Action {
-    Ok("Hello world")
+    Ok(views.html.index("Hello world"))
   }
 
   def hosts = Action {
-    Ok(views.html.index(Host.all(),hostForm))
+    Ok(views.html.hosts(Host.all(),hostForm))
   }
-      
+
   def newHost = TODO
-          
+
   def deleteHost(id: Long) = TODO
 
 }
