@@ -22,7 +22,15 @@ object Application extends Controller {
     Ok(views.html.hosts(Host.all(),hostForm))
   }
 
-  def newHost = TODO
+  def newHost = Action { implicit request =>
+    hostForm.bindFromRequest.fold(
+      errors => BadRequest(views.html.hosts(Host.all(), errors)),
+      hostname => {
+        Host.create(hostname)
+        Redirect(routes.Application.hosts)
+      }
+    )
+  }
 
   def deleteHost(id: Long) = TODO
 
