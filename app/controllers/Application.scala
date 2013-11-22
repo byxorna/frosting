@@ -11,7 +11,7 @@ import models.Host
 object Application extends Controller {
 
   val hostForm = Form(
-    "label" -> nonEmptyText
+    "hostname" -> nonEmptyText
   )
 
   def index = Action {
@@ -32,6 +32,9 @@ object Application extends Controller {
     )
   }
 
-  def deleteHost(id: Long) = TODO
+  def deleteHost(id: Long) = Action {
+    Host.delete(id)
+    Redirect(routes.Application.hosts)
+  }
 
 }

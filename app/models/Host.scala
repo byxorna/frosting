@@ -13,9 +13,9 @@ case class Host(id: Long, hostname: String)
 
 // companion object for Host
 object Host {
-  
+
   // the host parser, to easily get Host objects from a SQL query
-  val task = {
+  val host = {
     get[Long]("id") ~
     get[String]("hostname") map {
       case id~hostname => Host(id,hostname)
@@ -25,10 +25,22 @@ object Host {
   def all(): List[Host] = DB.withConnection { implicit conn =>
     SQL("select * from host").as(host *)
   }
-      
-  def create(hostname: String) {}
-          
-  def delete(id: Long) {}
-              
+
+  def create(hostname: String) {
+    DB.withConnection { implicit conn =>
+      SQL("insert into host (hostname) values ({hostname})").on(
+        'hostname -> hostname
+      ).executeUpdate()
+    }
+  }
+
+  def delete(id: Long) {
+    DB.withConnection { implicit conn =>
+      SQL("delete from host where id = {id}").on(
+        'id -> id
+      ).executeUpdate()
+    }
+  }
+
 }
 

@@ -6,7 +6,13 @@ version := "0.1.0"
 
 scalaVersion := "2.10.3"
 
+resolvers += "typesafe" at "http://repo.typesafe.com/typesafe/releases"
+
 playScalaSettings
 
-libraryDependencies += "play" %% "anorm" % "latest.integration"
+libraryDependencies ++= Seq(
+  anorm,
+  jdbc,
+  cache
+)
 
