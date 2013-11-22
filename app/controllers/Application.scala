@@ -13,6 +13,10 @@ object Application extends Controller {
   val hostForm = Form(
     "hostname" -> nonEmptyText
   )
+  val commandForm = Form(Map(
+    "name" -> nonEmptyText,
+    "command" -> nonEmptyText
+  ))
 
   def index = Action {
     Ok(views.html.index("Hello world"))
@@ -37,4 +41,22 @@ object Application extends Controller {
     Redirect(routes.Application.hosts)
   }
 
+  def commands = Action {
+    Ok(views.html.commands(Command.all(),commandForm))
+  }
+
+  def newCommand = Action { implicit request =>
+    commandForm.bindFromRequest.fold(
+      errors => BadRequest(views.html.commands(Command.all(), errors)),
+      name,command => {
+        Command.create(name,command)
+        Redirect(routes.Application.commands)
+      }
+    )
+  }
+
+  def deleteHost(id: Long) = Action {
+    Host.delete(id)
+    Redirect(routes.Application.hosts)
+  }
 }
