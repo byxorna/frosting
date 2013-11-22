@@ -8,7 +8,7 @@ import anorm.SqlParser._
 import play.api.db._
 import play.api.Play.current
 
-case class Host(id: Long, hostname: String)
+case class Host(id: Long, hostname: String, monitored: Boolean)
 
 
 // companion object for Host
@@ -17,8 +17,9 @@ object Host {
   // the host parser, to easily get Host objects from a SQL query
   val host = {
     get[Long]("id") ~
-    get[String]("hostname") map {
-      case id~hostname => Host(id,hostname)
+    get[String]("hostname") ~
+    get[Boolean]("monitored") map {
+      case id~hostname~monitored => Host(id,hostname,monitored)
     }
   }
 

@@ -6,25 +6,34 @@
 
 <h1>@hosts.size hosts(s)</h1>
 
-<ul>
-    @hosts.map { host =>
-        <li>
-            @host.hostname
-
-            @form(routes.Application.deleteHost(host.id)) {
-                <input type="submit" value="Delete">
-            }
-        </li>
+<table class="table">
+  <tr>
+    <th>id</th>
+    <th>hostname</th>
+    <th>monitored</th>
+    <th>&nbsp;</th>
+  </tr>
+@hosts.map { host =>
+  <tr>
+    <td>@host.id</td>
+    <td>@host.hostname</td>
+    <td>@host.monitored</td>
+    <td>
+    @form(routes.Application.deleteHost(host.id)) {
+      <input type="submit" value="Delete">
     }
-</ul>
+    </td>
+  </tr>
+}
+</table>
 
 <h2>Add a new host</h2>
 
 @form(routes.Application.newHost) {
 
-    @inputText(hostForm("hostname"))
+  @inputText(hostForm("hostname"))
 
-    <input type="submit" value="Create">
+  <input type="submit" value="Create">
 
 }
 

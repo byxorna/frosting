@@ -5,7 +5,7 @@ import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
 
-import models.Host
+import models._
 
 
 object Application extends Controller {
