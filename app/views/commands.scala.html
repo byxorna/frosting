@@ -1,0 +1,43 @@
+@(commands: List[Command], commandForm: Form[(String,String)])
+
+@import helper._
+
+@main("Commands") {
+
+<h1>@commands.size commands(s)</h1>
+
+<table class="table">
+  <tr>
+    <th>id</th>
+    <th>name</th>
+    <th>command</th>
+    <th>&nbsp;</th>
+  </tr>
+@commands.map { command =>
+  <tr>
+    <td>@command.id</td>
+    <td>@command.name</td>
+    <td>@command.command</td>
+    <td>
+    @form(routes.Application.deleteCommand(command.id)) {
+      <input type="submit" value="Delete">
+    }
+    </td>
+  </tr>
+}
+</table>
+
+<h2>Add a new command</h2>
+
+@form(routes.Application.newCommand) {
+
+  @inputText(commandForm("name"))
+
+  @inputText(commandForm("command"))
+
+  <input type="submit" value="Create">
+
+}
+
+}
+

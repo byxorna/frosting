@@ -5,6 +5,10 @@ GET     /hosts                  controllers.Application.hosts
 POST    /hosts                  controllers.Application.newHost
 POST    /hosts/:id/delete       controllers.Application.deleteHost(id: Long)
 
+# commands
+GET     /commands                  controllers.Application.commands
+POST    /commands                  controllers.Application.newCommand
+POST    /commands/:id/delete       controllers.Application.deleteCommand(id: Long)
 
 # API for hosts
 #GET     /api/hosts      controllers.Api.getHosts
