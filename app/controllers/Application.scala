@@ -17,6 +17,13 @@ object Application extends Controller {
     "name" -> nonEmptyText,
     "command" -> nonEmptyText
   ))
+  val serviceForm = Form(tuple(
+    "name" -> nonEmptyText,
+    "description" -> nonEmptyText,
+    "arguments_json" -> text,
+    "command_id" -> number,
+    "contact_id" -> number
+  ))
 
   def index = Action {
     Ok(views.html.index("Hello world"))
@@ -59,4 +66,24 @@ object Application extends Controller {
     Command.delete(id)
     Redirect(routes.Application.commands)
   }
+
+  def services = Action {
+    Ok(views.html.services(Service.all(),serviceForm))
+  }
+
+  def newService = Action { implicit request =>
+    serviceForm.bindFromRequest.fold(
+      errors => BadRequest(views.html.services(Service.all(), errors)),
+      value => {
+        Service.create(value._1,value._2,Some(value._3),value._4,Some(value._5))
+        Redirect(routes.Application.services)
+      }
+    )
+  }
+
+  def deleteService(id: Long) = Action {
+    Service.delete(id)
+    Redirect(routes.Application.services)
+  }
+
 }

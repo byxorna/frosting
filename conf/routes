@@ -10,6 +10,11 @@ GET     /commands                  controllers.Application.commands
 POST    /commands                  controllers.Application.newCommand
 POST    /commands/:id/delete       controllers.Application.deleteCommand(id: Long)
 
+# services
+GET     /services                  controllers.Application.services
+POST    /services                  controllers.Application.newService
+POST    /services/:id/delete       controllers.Application.deleteService(id: Long)
+
 # API for hosts
 #GET     /api/hosts      controllers.Api.getHosts
 #GET     /api/host/:id   controllers.Api.getHost(id: Int)
