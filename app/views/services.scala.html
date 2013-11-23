@@ -1,0 +1,51 @@
+@(services: List[Service], serviceForm: Form[(String,String,String,Int,Int)])
+
+@import helper._
+
+@main("Services") {
+
+<h1>@services.size services</h1>
+
+<table class="table">
+  <tr>
+    <th>id</th>
+    <th>name</th>
+    <th>description</th>
+    <th>arguments_json</th>
+    <th>command_id</th>
+    <th>contact_id</th>
+    <th>&nbsp;</th>
+  </tr>
+@services.map { service =>
+  <tr>
+    <td>@service.id</td>
+    <td>@service.name</td>
+    <td>@service.description</td>
+    <td>@service.arguments_json</td>
+    <td>@service.command_id</td>
+    <td>@service.contact_id</td>
+    <td>
+    @form(routes.Application.deleteService(service.id)) {
+      <input type="submit" value="Delete">
+    }
+    </td>
+  </tr>
+}
+</table>
+
+<h2>Add a new service</h2>
+
+@form(routes.Application.newService) {
+
+  @inputText(serviceForm("name"))
+  @inputText(serviceForm("description"))
+  @inputText(serviceForm("arguments_json"))
+  @inputText(serviceForm("command_id"))
+  @inputText(serviceForm("contact_id"))
+
+  <input type="submit" value="Create">
+
+}
+
+}
+
