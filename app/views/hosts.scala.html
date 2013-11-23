@@ -1,4 +1,4 @@
-@(hosts: List[Host], hostForm: Form[String])
+@(hosts: List[Host], hostForm: Form[(String,List[String],List[String],Boolean)])
 
 @import helper._
 
@@ -10,7 +10,7 @@
   <tr>
     <th>id</th>
     <th>hostname</th>
-    <th>attributes_json</th>
+    <th>attributes</th>
     <th>monitored</th>
     <th>&nbsp;</th>
   </tr>
@@ -18,7 +18,11 @@
   <tr>
     <td>@host.id</td>
     <td>@host.hostname</td>
-    <td>@host.attributes_json</td>
+    <td>
+      @host.attributes.map { case(k,v) =>
+        <div><code>@k</code>:<code>@v</code></div></div>
+      }
+    </td>
     <td>@host.monitored</td>
     <td>
     @form(routes.Application.deleteHost(host.id)) {
@@ -34,10 +38,34 @@
 @form(routes.Application.newHost) {
 
   @inputText(hostForm("hostname"))
+  <button type="button" id="add_attr">Add an attribute</button>
 
   <input type="submit" value="Create">
 
 }
+
+<template id="attribute_form_template">
+  <div>
+    @inputText(hostForm("attribute_keys[]")) : @inputText(hostForm("attribute_values[]"))
+    <button type="button" class="delete_attr">Remove attribute</button>
+  </div>
+</template>
+
+<script type="text/javascript">
+$(function(){
+  var template = $('template#attribute_form_template');
+  $('button#add_attr').on('click',function(e){
+    $(template.html()).insertBefore(this);
+    return false;
+  });
+  $(document.body).on('click','button.delete_attr',function(e){
+    console.log(e.target);
+    $(e.target).parent().remove();
+    return false;
+  });
+});
+</script>
+
 
 }
 

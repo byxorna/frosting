@@ -10,9 +10,12 @@ import models._
 
 object Application extends Controller {
 
-  val hostForm = Form(
-    "hostname" -> nonEmptyText
-  )
+  val hostForm = Form(tuple(
+    "hostname" -> nonEmptyText,
+    "attribute_keys" -> list(text),
+    "attribute_values" -> list(text),
+    "monitored" -> boolean
+  ))
   val commandForm = Form(tuple(
     "name" -> nonEmptyText,
     "command" -> nonEmptyText
@@ -36,8 +39,8 @@ object Application extends Controller {
   def newHost = Action { implicit request =>
     hostForm.bindFromRequest.fold(
       errors => BadRequest(views.html.hosts(Host.all(), errors)),
-      hostname => {
-        Host.create(hostname)
+      value => {
+        Host.create(value._1,(value._2 zip value._3).toMap, value._4)
         Redirect(routes.Application.hosts)
       }
     )

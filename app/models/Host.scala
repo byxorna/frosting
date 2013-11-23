@@ -14,6 +14,7 @@ case class Host(
   id: Long,
   hostname: String,
   attributes_json: Option[String],
+  attributes: Map[String,String],
   monitored: Boolean
 )
 
@@ -30,9 +31,14 @@ object Host {
     get[Option[String]]("attributes_json") ~
     get[Boolean]("monitored") map {
       case id~hostname~attributes_json~monitored => attributes_json match {
-        case None => Host(id,hostname,None,monitored)
-        //TODO: parse attrs to Map[String,String] here
-        case Some(attrs) => Host(id,hostname,Some(attrs),monitored)
+        case None =>
+          Host(id,hostname,attributes_json,Map[String,String](),monitored)
+        case Some(s) =>
+          Host(
+            id,hostname,attributes_json,
+            Json.parse(s).as[Map[String,String]],
+            monitored
+          )
       }
     }
   }
@@ -41,10 +47,13 @@ object Host {
     SQL("select * from host").as(host *)
   }
 
-  def create(hostname: String) {
+  def create(hostname: String, attributes: Map[String,String], monitored: Boolean) {
     DB.withConnection { implicit conn =>
-      SQL("insert into host (hostname) values ({hostname})").on(
-        'hostname -> hostname
+      SQL("""insert into host (hostname,attributes_json,monitored)
+            values ({hostname},{attributes_json},{monitored})""").on(
+        'hostname -> hostname,
+        'attributes_json -> Json.stringify(Json.toJson(attributes)),
+        'monitored -> monitored
       ).executeUpdate()
     }
   }

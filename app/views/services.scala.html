@@ -41,7 +41,7 @@
 
   @inputText(serviceForm("name"))
   @inputText(serviceForm("description"))
-  <button id="add_argument">Add an argument</button>
+  <button type="button" id="add_argument">Add an argument</button>
   @inputText(serviceForm("command_id"))
   @inputText(serviceForm("contact_id"))
 
@@ -66,7 +66,6 @@ $(function(){
   $(document.body).on('click','button.delete_argument',function(e){
     console.log(e.target);
     $(e.target).parent().remove();
-    e.preventDefault();
     return false;
   });
 });
