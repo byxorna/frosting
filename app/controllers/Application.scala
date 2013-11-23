@@ -20,7 +20,7 @@ object Application extends Controller {
   val serviceForm = Form(tuple(
     "name" -> nonEmptyText,
     "description" -> nonEmptyText,
-    "arguments_json" -> text,
+    "arguments" -> list(text),
     "command_id" -> number,
     "contact_id" -> number
   ))
@@ -75,7 +75,7 @@ object Application extends Controller {
     serviceForm.bindFromRequest.fold(
       errors => BadRequest(views.html.services(Service.all(), errors)),
       value => {
-        Service.create(value._1,value._2,Some(value._3),value._4,Some(value._5))
+        Service.create(value._1,value._2,value._3,value._4,Some(value._5))
         Redirect(routes.Application.services)
       }
     )

@@ -11,8 +11,8 @@ import play.api.Play.current
 import play.api.libs.json._
 
 case class Host(
-  id: Long, 
-  hostname: String, 
+  id: Long,
+  hostname: String,
   attributes_json: Option[String],
   monitored: Boolean
 )
