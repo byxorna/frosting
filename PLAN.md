@@ -2,6 +2,8 @@ Plan and Notes
 ==============
 
 Build a new monitoring solution! Feature set like Icinga, but with improvements!
+* [http://docs.icinga.org/latest/en/db_model.html](http://www.shinken-monitoring.org/)
+* [http://docs.icinga.org/latest/en/db_model.html](http://docs.icinga.org/latest/en/db_model.html)
 
 ## Must have features
 
