@@ -98,4 +98,6 @@ Reads from alert queue. Builds alert text, sends alert. Depends on API availabil
 * Pushes notice of email to API
 
 
+## Database
 
+Take a look at [http://docs.icinga.org/latest/en/db_model.html]
